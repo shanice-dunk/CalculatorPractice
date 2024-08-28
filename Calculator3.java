@@ -12,10 +12,10 @@ public class Calculator3 implements ActionListener{
     // Number buttons
     JButton[] numerberedButtons = new JButton[10];
     // Operation buttons
-    JButton[] functionButtons = new JButton[8];
+    JButton[] functionButtons = new JButton[9];
     // Operations
-    JButton addButton,subButton,mulButton,divButton;
-    JButton decimalButton,equButton,delButton,clrButton;
+    JButton addButton, subButton, mulButton, divButton;
+    JButton decButton, equButton, delButton, clrButton, negButton;
     JPanel panel;
 
     // Font for the calculator
@@ -44,22 +44,25 @@ public class Calculator3 implements ActionListener{
         subButton = new JButton("-");
         mulButton = new JButton("*");
         divButton = new JButton("/");
-        decimalButton = new JButton(".");
+        decButton = new JButton(".");
         equButton = new JButton("=");
         delButton = new JButton("Delete");
         clrButton = new JButton("Clear");
+        negButton = new JButton("(-)");
 
+        // Add buttons to array
         functionButtons[0] = addButton;
         functionButtons[1] = subButton;
         functionButtons[2] = mulButton;
         functionButtons[3] = divButton;
-        functionButtons[4] = decimalButton;
+        functionButtons[4] = decButton;
         functionButtons[5] = equButton;
         functionButtons[6] = delButton;
         functionButtons[7] = clrButton;
+        functionButtons[8] = negButton;
 
         // for loop for functionButtons
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 9; i++) {
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
@@ -74,9 +77,10 @@ public class Calculator3 implements ActionListener{
 
         }
 
-        // Delete and clear buttons sizes within calculator
-        delButton.setBounds(50, 430, 145, 50);
-        clrButton.setBounds(205, 430, 145, 50);
+        // Delete, negative and clear buttons sizes within calculator
+        delButton.setBounds(150, 430, 100, 50);
+        clrButton.setBounds(250, 430, 100, 50);
+        negButton.setBounds(50, 430, 100, 50);
 
         // Panel within calculator that stores the numbers and functions
         panel = new JPanel();
@@ -97,13 +101,14 @@ public class Calculator3 implements ActionListener{
         panel.add(numerberedButtons[8]);
         panel.add(numerberedButtons[9]);
         panel.add(mulButton);
-        panel.add(decimalButton);
+        panel.add(decButton);
         panel.add(numerberedButtons[0]);
         panel.add(equButton);
         panel.add(divButton);
 
         // Adding to the frame
         frame.add(panel);
+        frame.add(negButton);
         frame.add(delButton);
         frame.add(clrButton);
         frame.add(textField);
@@ -111,7 +116,7 @@ public class Calculator3 implements ActionListener{
         
     }
     public static void main(String[] args) {
-        Calculator3 cacl = new Calculator3();
+        Calculator3 calc = new Calculator3();
         
     }
     @Override
@@ -123,8 +128,9 @@ public class Calculator3 implements ActionListener{
             if(e.getSource() == numerberedButtons[i]) {
                 textField.setText(textField.getText().concat(String.valueOf(i)));
             }
+        }
         // Decimal button
-        if(e.getSource() == decimalButton) {
+        if(e.getSource() == decButton) {
             textField.setText(textField.getText().concat("."));
         }
         // Add button
@@ -190,7 +196,12 @@ public class Calculator3 implements ActionListener{
                 textField.setText(textField.getText() + string.charAt(j));
             }
         }
+        // Negative button
+        if(e.getSource() == negButton) {
+            double temp = Double.parseDouble(textField.getText());
+            temp*=-1;
+            textField.setText(String.valueOf(temp));
+        }
     }
 }
 
-}
